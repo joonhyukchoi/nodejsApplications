@@ -35,6 +35,18 @@ function spiderLinks (currentUrl, body, nesting, cb) {
   }
 }
 
+/* 아래 함수를 사용하면 병렬 실행
+function spiderLinks(currentUrl, content, nesting) {
+  if (nesting === 0) {
+    return Promise.resolve()
+  }
+  const links = getPageLinks(currentUrl, content)
+  const promises = links.map(link => spider(link, nesting - 1))
+
+  return Promise.all(promises)\
+}
+*/
+
 export function spider (url, nesting, cb) {
   const filename = urlToFilename(url)
   return fsPromises.readFile(filename, 'utf8')
