@@ -47,6 +47,44 @@ function spiderLinks(currentUrl, content, nesting) {
 }
 */
 
+/* 아래 함수를 사용하면 제한된 병렬 실행
+
+function spiderLinks(currentUrl, content, nesting, queue) {
+  if (nesting === 0) {
+    return Promise.resolve()
+  }
+
+  const links = getPageLinks(currentUrl, content)
+  const promises = links.map(link => spiderTask(link, nesting - 1, queue))
+
+  return Promise.all(promises)
+}
+
+const spidering = new Set()
+function spiderTask(url, nesting, queue) {
+  if (spidering.has(url)) {
+    return Promise.resolve()
+  }
+  spidering.add(url)
+
+  const filename = urlToFilename(url)
+
+  return queue
+    .runTask(() => {
+      return fsPromises.readFile(filename, 'utf8')
+        .catch((err) => {
+          if (err.code !== 'ENOENT') {
+            throw error
+          }
+
+          return download(url, filename)
+        })
+    })
+    .then(content => spiderLinks(url, content, nesting, queue))
+}
+
+*/
+
 export function spider (url, nesting, cb) {
   const filename = urlToFilename(url)
   return fsPromises.readFile(filename, 'utf8')
