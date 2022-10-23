@@ -45,6 +45,9 @@ function getUser(username) {
         console.log('in then')
         return user.name});
 }
+function test1() {
+    setTimeout(() => console.log('hello'), 0)
+}
 
 async function getUserAll() {
   let user;
@@ -52,8 +55,8 @@ async function getUserAll() {
 //   console.log(user);
 console.log('user1');
 console.log(user);
-  user = await getUser('ahejlsberg');
-  console.log(user);
+  await test1();
+  console.log('test1');
 
   user = await getUser('ungmo2');
   console.log(user);
