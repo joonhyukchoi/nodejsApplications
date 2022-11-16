@@ -8,6 +8,12 @@ const html = htm.bind(react.createElement)
 
 export class Author extends react.Component {
   render () {
+    if (!author) {
+      return html`<${FourOhFour}
+        staticContext=${this.props.staticContext}
+        error="Author not found"
+        />`
+    }
     // find 함수는 배열의 요소를 만족하는 첫 번째 값 반환
     const author = authors.find(
         // react router를 통해서 authorId를 전달함(App.js 파일에 /: 뒷부분)
