@@ -1,4 +1,5 @@
 import { Matrix } from './matrix.js'
+import { CheckUrls } from './checkUrls.js'
 
 const matrix2x2 = new Matrix([
     ['11', '12'],
@@ -21,3 +22,16 @@ for (const element of matrix2x2) {
 const flattenedMatrix = [...matrix2x2]
 console.log(flattenedMatrix)
 
+async function main () {
+    const checkUrls = new CheckUrls([
+        'https://nodejsdesignpatterns.com',
+        'https://example.com',
+        'https://mustbedownforsurehopefully.com'
+    ])
+    for await (const status of checkUrls) {
+        console.log(status)
+    }
+}
+
+
+main()
