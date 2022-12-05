@@ -4,7 +4,7 @@ import { jsonMiddleware } from './jsonMiddleware.js'
 import { zlibMiddleware } from './zlibMiddleware.js'
 
 async function main () {
-    const socket = new zeromq.Request()
+    const socket = new zeromq.socket('req')
     await socket.connect('tcp://127.0.0.1:5000')
 
     const zmqm = new ZmqMiddlewareManager(socket)

@@ -1,7 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "superagent": "^8.0.4",
-    "zlib": "^1.0.5"
-  }
-}
