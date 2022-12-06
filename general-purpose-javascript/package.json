@@ -24,13 +24,15 @@
         "webpack-dev-server": "^3.10.3"
     },
     "dependencies": {
+        "@fastify/cors": "^7.0.0",
         "esm": "^3.2.25",
-        "fastify": "^4.9.2",
+        "fastify": "^3.29.4",
         "fastify-static": "^4.7.0",
         "htm": "^3.0.3",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
-        "react-router-dom": "^5.1.2"
+        "react-router-dom": "^5.1.2",
+        "superagent": "^8.0.5"
     },
     "engines": {
         "node": ">=14"
