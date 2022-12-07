@@ -2,35 +2,72 @@ import react from 'react'
 import htm from 'htm'
 import { FourOhFour } from './FourOhFour.js'
 import { Header } from '../Header.js'
-import { authors } from '../../../data/authors.js'
+import superagent from 'superagent'
 
 const html = htm.bind(react.createElement)
 
 export class Author extends react.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      author: null,
+      loading: true
+    }
+  }
+
+  async loadData () {
+    let author = null
+    this.setState({ loading: false, author })
+    try {
+      // 이렇게 하면 객체 안의 body 키가 가지는 값 저장
+      const { body } = await superagent.get(
+        `http://localhost:3001/api/author/${
+          this.props.match.params.authorId
+        }`
+      )
+      // 여기서 author를 바꾼다고 state가 적용될까?
+      author = body
+    } catch (e) {
+      this.setState({ loading: false, author })
+    }
+  }
+
+  componentDidMount () {
+    this.loadData()
+  }
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.match.params.authorId !==
+      this.props.match.params.authorId) {
+        this.loadData()
+      }
+  }
+
   render () {
+    if (this.state.loading) {
+      return html`<${Header}/><div>Loading ...</div>`
+    }
+
+    if (!this.state.author) {
+      return html`<${FourOhFour}
+      staticContext = ${this.props.staticContext}
+      error = "Author not found"
+      />`
+    }
     if (!author) {
       return html`<${FourOhFour}
         staticContext=${this.props.staticContext}
         error="Author not found"
         />`
     }
-    // find 함수는 배열의 요소를 만족하는 첫 번째 값 반환
-    const author = authors.find(
-        // react router를 통해서 authorId를 전달함(App.js 파일에 /: 뒷부분)
-      author => author.id === this.props.match.params.authorId
-    )
-
-    if (!author) {
-      return html`<${FourOhFour} error="Author not found"/>`
-    }
 
     return html`<div>
       <${Header}/>
-      <h2>${author.name}</h2>
-      <p>${author.bio}</p>
+      <h2>${this.state.author.name}</h2>
+      <p>${this.state.author.bio}</p>
       <h3>Books</h3>
       <ul>
-        ${author.books.map((book) =>
+        ${this.state.author.books.map((book) =>
           html`<li key=${book.id}>${book.title} (${book.year})</li>`
         )}
       </ul>
