@@ -4,23 +4,31 @@ import { Link } from 'react-router-dom'
 import superagent from 'superagent'
 import { Header } from '../Header.js'
 import { authors } from '../../../data/authors.js'
+import { AsyncPage } from './AsyncPage.js'
 
 const html = htm.bind(react.createElement)
 
-export class AuthorsIndex extends react.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      authors: [],
-      loading: true
-    }
-  }
+export class AuthorsIndex extends AsyncPage {
+  // constructor (props) {
+  //   super(props)
+  //   this.state = {
+  //     authors: [],
+  //     loading: true
+  //   }
+  // }
 
-  async componentDidMount () {
-    const { body } = await superagent.get('http://localhost:3001/api/authors')
-    this.setState({ loading: false, authors: body })
-  }
+  // async componentDidMount () {
+  //   const { body } = await superagent.get('http://localhost:3001/api/authors')
+  //   this.setState({ loading: false, authors: body })
+  // }
 
+  static async preloadAsyncData (props) {
+    const { body } = await superagent.get(
+      'http://localhost:3001/api/authors'
+    )
+    return { authors: body }
+  }
+  
   render () {
 
     if (this.state.loading) {
