@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "serve-handler": "^6.1.5",
+    "ws": "^8.11.0"
+  }
+}
