@@ -2,7 +2,8 @@ import { createServer } from 'http'
 import staticHandler from 'serve-handler'
 import WebSocket, { WebSocketServer } from 'ws'
 import yargs from 'yargs'
-import { Publisher, Subscriber } from 'zeromq'
+// import { Publisher, Subscriber } from 'zeromq'
+import zmq from 'zeromq'
 
 const server = createServer((req, res) => {
     return staticHandler(req, res, { public: 'www'})
@@ -10,9 +11,9 @@ const server = createServer((req, res) => {
 
 let pubSocket
 async function initializeSokcets() {
-    pubSocket = new Publisher()
+    pubSocket = new zmq.Publisher()
     await pubSocket.bind(`tcp://127.0.0.1:${yargs.argv.pub}`)
-    const subSocket = new Subscriber()
+    const subSocket = new zmq.Subscriber()
     const subPorts = [].concat(yargs.argv.sub)
     for (const port of subPorts) {
         console.log(`Subscribing to ${port}`)
@@ -46,4 +47,4 @@ function broadcast (msg) {
     }
 }
 
-server.listen(process.argv[2] || 8080)
+server.listen(process.argv.http || 8080)
