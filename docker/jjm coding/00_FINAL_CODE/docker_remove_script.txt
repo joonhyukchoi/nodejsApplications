@@ -1,0 +1,10 @@
+# 모든 컨테이너 삭제
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker rmi -f $(docker images -q)
+
+# 쓰지 않는 볼륨 삭제 명령
+docker volume prune
+
+# 정지된 컨테이너, 실행중인 컨테이너 이미지 외의 이미지, 볼륨, 네트워크 삭제
+docker system prune # 정지된 컨테이너, 실행중인 컨테이너 이미지 외의 이미지, 볼륨, 네트워크 삭제

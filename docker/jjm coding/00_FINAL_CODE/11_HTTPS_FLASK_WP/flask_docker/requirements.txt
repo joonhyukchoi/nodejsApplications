@@ -1,0 +1,8 @@
+안녕하세요.
+상당히 희한한 에러인 것 같은데, 구글로 에러 메세지를 검색해보니 유사한 케이스들이 있어보이기는 합니다. 
+https://stackoverflow.com/questions/50202238/python-pip-requestsdependencywarning-urllib3-1-9-1-or-chardet-2-3-0-doe
+
+버전과 PC OS 에 따른 무언가 라이브러리들의 충돌 같긴 한데요. 그러다보니 제가 그런 케이스를 본 적은 없긴 해요. 하지만, 에러메세지는 읽어보면, requests 라이브러리는 urllib3 가 특정 버전들이 필요하다 이런 느낌인 것 같아요. 그렇다면, 아예 다음과 같이 두 라이브러리를 우선 업데이트해보시면 어떠실까요?
+!pip install --upgrade requests
+!pip install --upgrade urllib3
+이게 안되면 특정 버전을 설치를 해보는 방법도 있을 것 같은데, 그정도 상황이 되면, 만만한 상황이 아닐 것 같아요. 그런 상황이면, 아예 anaconda를 삭제 후, 최신 버전으로 설치를 해보신 후에 selenium 을 설치하시는 편이 더 나으실 수도 있어요. 이런 부분 혹시 참고가 되셨으면 좋겠습니다.

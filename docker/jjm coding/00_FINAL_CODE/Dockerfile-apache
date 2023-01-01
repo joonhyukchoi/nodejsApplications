@@ -1,0 +1,10 @@
+FROM ubuntu:18.04
+LABEL maintainer="dream@fun-coding.org"
+
+RUN apt-get update
+RUN apt-get install -y apache2 apt-utils
+
+EXPOSE 80
+COPY ./2021_DEV_HTML /var/www/html/
+
+ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
